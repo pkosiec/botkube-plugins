@@ -3,6 +3,22 @@ before:
     - go mod download
 
 builds:
+  - id: gh
+    main: cmd/gh/main.go
+    binary: executor_gh_{{ .Os }}_{{ .Arch }}
+
+    no_unique_dist_dir: true
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    goarm:
+      - 7
+      
   - id: echo
     main: cmd/echo/main.go
     binary: executor_echo_{{ .Os }}_{{ .Arch }}
@@ -28,6 +44,7 @@ builds:
     goos: *goos
     goarch: *goarch
     goarm: *goarm
+
 
 snapshot:
   name_template: 'v{{ .Version }}'
